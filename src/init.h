@@ -265,7 +265,7 @@ LWindow::LWindow() {
 
 bool LWindow::init() {
 	//Create window
-	mWindow = SDL_CreateWindow("I am Trash?", SDL_WINDOWPOS_UNDEFINED,
+	mWindow = SDL_CreateWindow("I am Garbage?", SDL_WINDOWPOS_UNDEFINED,
 	SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
 			SDL_WINDOW_SHOWN);
 	if (mWindow != NULL) {
@@ -344,7 +344,7 @@ void LWindow::handleEvent(SDL_Event& e) {
 		//Update window caption with new data
 		if (updateCaption) {
 			std::stringstream caption;
-			caption << "I am Trash?";
+			caption << "I am Garbage?";
 
 			SDL_SetWindowTitle(mWindow, caption.str().c_str());
 		}
@@ -462,38 +462,45 @@ SDL_Color blue = { 0, 0, 255, 255 };
 SDL_Color green = { 0, 255, 0, 255 };
 SDL_Color red = { 255, 0, 0, 255 };
 SDL_Color white = { 255, 255, 255, 255 };
+SDL_Color orange = { 180, 90, 20, 255 };
+
+// Textures
+LTexture gText;
 
 // Fonts
 TTF_Font *gFont12 = NULL;
 TTF_Font *gFont21 = NULL;
 TTF_Font *gFont42 = NULL;
 
-// Textures
-LTexture gText;
-
 // Sound
 Mix_Chunk *sTime = NULL;
+Mix_Music *sMusic = NULL;
 
 bool loadMedia() {
 	bool success = true;
 
+	gFont12 = TTF_OpenFont("resource/PressStart2P.ttf", 12);
+	gFont21 = TTF_OpenFont("resource/PressStart2P.ttf", 21);
 	sTime = Mix_LoadWAV("resource/snd_time.wav");
-	gFont12 = TTF_OpenFont("resource/Viga-Regular.ttf", 12);
-	gFont21 = TTF_OpenFont("resource/Viga-Regular.ttf", 21);
-	gFont42 = TTF_OpenFont("resource/Viga-Regular.ttf", 18);
+	sMusic = Mix_LoadMUS("resource/OHC 469 Simple Mayhem.mp3");
 
 	return success;
 }
 
 void close() {
+	gText.free();
 	TTF_CloseFont(gFont12);
 	TTF_CloseFont(gFont21);
 	TTF_CloseFont(gFont42);
+	Mix_FreeChunk(sTime);
+	Mix_FreeMusic(sMusic);
+
+
 	gFont12 = NULL;
 	gFont21 = NULL;
 	gFont42 = NULL;
-	gText.free();
-	Mix_FreeChunk(sTime);
+	sTime 	= NULL;
+	sMusic 	= NULL;
 
 	SDL_DestroyRenderer(gRenderer);
 	gWindow.free();
