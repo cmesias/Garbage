@@ -268,9 +268,9 @@ LWindow::LWindow() {
 
 bool LWindow::init() {
 	//Create window
-	mWindow = SDL_CreateWindow("I am Garbage?", SDL_WINDOWPOS_UNDEFINED,
+	mWindow = SDL_CreateWindow("Garbauge", SDL_WINDOWPOS_UNDEFINED,
 	SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
-			SDL_WINDOW_SHOWN);
+			SDL_WINDOW_SHOWN );
 	if (mWindow != NULL) {
 		mMouseFocus = true;
 		mKeyboardFocus = true;
@@ -347,7 +347,7 @@ void LWindow::handleEvent(SDL_Event& e) {
 		//Update window caption with new data
 		if (updateCaption) {
 			std::stringstream caption;
-			caption << "I am Garbage?";
+			caption << "Garbauge";
 
 			SDL_SetWindowTitle(mWindow, caption.str().c_str());
 		}
@@ -469,6 +469,7 @@ SDL_Color orange = { 180, 90, 20, 255 };
 
 // Textures
 LTexture gText;
+LTexture gControls;
 
 // Fonts
 TTF_Font *gFont12 = NULL;
@@ -481,6 +482,7 @@ Mix_Music *sMusic = NULL;
 bool loadMedia() {
 	bool success = true;
 
+	gControls.loadFromFile("resource/controls.png");
 	gFont12 = TTF_OpenFont("resource/PressStart2P.ttf", 12);
 	gFont21 = TTF_OpenFont("resource/PressStart2P.ttf", 21);
 	sTime = Mix_LoadWAV("resource/snd_time.wav");
@@ -491,6 +493,7 @@ bool loadMedia() {
 
 void close() {
 	gText.free();
+	gControls.free();
 	TTF_CloseFont(gFont12);
 	TTF_CloseFont(gFont21);
 	Mix_FreeChunk(sTime);
@@ -515,7 +518,7 @@ void close() {
 int mapX = 0;
 int mapY = 0;
 int mapW = 640;
-int mapH = 360;
+int mapH = 360 - 30 - 2;
 
 // trashBin bin variables
 int trashBinX = mapX+mapW/2 - 150/2;
@@ -552,6 +555,7 @@ int score = 0;
 bool protection = true;
 int protectionTimer = 0;
 bool quit = false;
+bool hideTip = false;
 
 void SaveHighScore() {
 	bool saveHighscore = false;
@@ -772,9 +776,9 @@ void Render() {
 	// Render textures
 	{
 		// Render Map
-		SDL_Rect tempMap = { mapX, mapY, mapW, mapH };
-		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
-		SDL_RenderDrawRect(gRenderer, &tempMap);
+		//SDL_Rect tempMap = { mapX, mapY, mapW, mapH };
+		//SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+		//SDL_RenderDrawRect(gRenderer, &tempMap);
 
 		// Render House
 		SDL_Rect tempHouse = { trashBinX, trashBinY, trashBinW, trashBinH };
@@ -886,6 +890,11 @@ void Render() {
 		gText.render(gWindow.getWidth()/2 - gText.getWidth()/2,
 				 gWindow.getHeight() * 0.90 - gText.getHeight(),
 					 gText.getWidth(), gText.getHeight());
+	}
+
+	// Show tip
+	if (!hideTip) {
+		gControls.render(0 ,0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
 }

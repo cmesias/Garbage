@@ -67,10 +67,22 @@ int main(int argc, char **argv) {
 				case SDLK_d:
 					moveR = true;
 					break;
+				case SDLK_h:
+					if (hideTip) {
+						hideTip = false;
+						mapH = 360 - 30 - 2;
+					} else {
+						hideTip = true;
+						mapH = 360;
+					}
+					break;
 				case SDLK_SPACE:
 					if (gameResult == 1) {
 						ContinueGame();
 					}
+					break;
+				case SDLK_ESCAPE:
+					quit = true;
 					break;
 				}
 			}
