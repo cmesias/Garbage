@@ -12,9 +12,16 @@ https://www.youtube.com/watch?v=_mOSbAsYPg0
 
 ![screenshot3](https://user-images.githubusercontent.com/17791454/158064520-f87b122e-d8c4-4a64-860a-8de66149ae93.png)
 
+[Summary]
+
 A game where you throw yourself away because it is the right thing to do, or else a hoarder will keep you for eternity.
 
 Submitted to Low Effort Game Jam at itch.io!
 
 Link: https://cmesias.itch.io/
 
+
+[Controls]
+* WASD - Move
+* H - Hide tips
+* Escape - Exit Game
